@@ -1,0 +1,26 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.javac = void 0;
+const factory_1 = require("../../task/factory");
+const base_1 = __importDefault(require("../base"));
+function javac({ classpath, output, inputs, source }) {
+    return (0, factory_1.FactoryExecTask)('javac', ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10', `-cp ${classpath}`, `-d ${output}`, ...inputs]);
+}
+exports.javac = javac;
+class JavacQueueItem extends base_1.default {
+    static create() {
+        return new this;
+    }
+    task(config) {
+        return javac({
+            classpath: config.androidJar,
+            output: config.classes,
+            source: config.code,
+            inputs: config.getJavaFiles()
+        });
+    }
+}
+exports.default = JavacQueueItem;

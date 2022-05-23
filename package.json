@@ -1,0 +1,33 @@
+{
+  "name": "apk-builder",
+  "version": "1.0.0",
+  "description": "build simple apk with node",
+  "main": "./dist/index.js",
+  "scripts": {
+    "dev": "ts-node -r esbuild-register ./script/index.ts",
+    "build": "rimraf ./dist && tsc"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "adm-zip": "^0.5.9",
+    "chalk": "^5.0.1",
+    "cli-truncate": "^3.1.0",
+    "execa": "^6.1.0",
+    "glob": "^8.0.3",
+    "ioc-di": "github:gityoog/ioc-di",
+    "log-symbols": "^5.1.0",
+    "log-update": "^5.0.1",
+    "rimraf": "^3.0.2",
+    "watchpack": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.0",
+    "@types/glob": "^7.2.0",
+    "@types/node": "^17.0.35",
+    "@types/rimraf": "^3.0.2",
+    "@types/watchpack": "^1.1.4",
+    "esbuild-register": "^3.3.2",
+    "ts-node": "^10.7.0"
+  }
+}
