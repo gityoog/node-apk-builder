@@ -7,12 +7,12 @@ export default class LinkQueueItem extends BaseQueueItem {
     return new this
   }
   task(config: ApkBuilderConfig) {
-    return link({
+    return link(() => ({
       outpath: config.apk,
       rjava: config.code,
       namespace: config.androidJar,
       manifest: config.manifest,
       flat: config.getFlatFiles()
-    })
+    }))
   }
 }

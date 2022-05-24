@@ -1,11 +1,13 @@
 import { execaCommand } from "execa"
 import Task from ".."
 
-export function FactoryExecTask(name: string, command: string | string[], callback?: () => Promise<void>) {
+export function FactoryExecTask(name: string, arg: string | string[] | (() => string | string[]), callback?: () => Promise<void>) {
   return new Task({
     name,
     processer: async ({ log, bindAbort }) => {
-      const proc = execaCommand(Array.isArray(command) ? command.join(' ') : command, {
+      arg = typeof arg === 'function' ? arg() : arg
+      const command = Array.isArray(arg) ? arg.join(' ') : arg
+      const proc = execaCommand(command, {
         env: {
           PATH: process.env.PATH
         },

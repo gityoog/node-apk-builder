@@ -7,9 +7,9 @@ export default class ResQueueItem extends BaseQueueItem {
     return new this
   }
   task(config: ApkBuilderConfig) {
-    return compile({
+    return compile(() => ({
       outpath: config.outpath,
       res: config.getResFiles()
-    })
+    }))
   }
 }

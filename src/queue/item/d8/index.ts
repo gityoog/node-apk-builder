@@ -7,10 +7,10 @@ export default class D8QueueItem extends BaseQueueItem {
     return new this
   }
   task(config: ApkBuilderConfig) {
-    return d8({
+    return d8(() => ({
       classpath: config.androidJar,
       output: config.outpath,
       inputs: config.getClassesFiles()
-    })
+    }))
   }
 }

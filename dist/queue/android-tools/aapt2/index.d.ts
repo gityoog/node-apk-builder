@@ -1,8 +1,8 @@
-export declare function compile({ outpath, res }: {
+export declare function compile(fn: () => {
     outpath: string;
     res: string[];
 }): import("../../task").default;
-export declare function link({ namespace, outpath, rjava, manifest, flat }: {
+export declare function link(fn: () => {
     outpath: string;
     rjava: string;
     namespace: string;

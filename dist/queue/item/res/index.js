@@ -10,10 +10,10 @@ class ResQueueItem extends base_1.default {
         return new this;
     }
     task(config) {
-        return (0, aapt2_1.compile)({
+        return (0, aapt2_1.compile)(() => ({
             outpath: config.outpath,
             res: config.getResFiles()
-        });
+        }));
     }
 }
 exports.default = ResQueueItem;

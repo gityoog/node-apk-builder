@@ -1,4 +1,4 @@
-export default function d8({ classpath, output, inputs }: {
+export default function d8(fn: () => {
     classpath: string;
     output: string;
     inputs: string[];

@@ -1,18 +1,24 @@
 import { FactoryExecTask } from "../../task/factory"
 
-export function compile({ outpath, res }: {
+export function compile(fn: () => {
   outpath: string
   res: string[]
 }) {
-  return FactoryExecTask('compile resource', ["aapt2", "compile", `-o ${outpath}`, ...res])
+  return FactoryExecTask('compile resource', () => {
+    const { outpath, res } = fn()
+    return ["aapt2", "compile", `-o ${outpath}`, ...res]
+  })
 }
 
-export function link({ namespace, outpath, rjava, manifest, flat }: {
+export function link(fn: () => {
   outpath: string
   rjava: string
   namespace: string
   manifest: string
   flat: string[]
 }) {
-  return FactoryExecTask('link resource', ["aapt2", "link", `-o ${outpath}`, `--java ${rjava}`, `-I ${namespace}`, `--manifest ${manifest}`, '--auto-add-overlay', ...flat])
+  return FactoryExecTask('link resource', () => {
+    const { outpath, rjava, namespace, manifest, flat } = fn()
+    return ["aapt2", "link", `-o ${outpath}`, `--java ${rjava}`, `-I ${namespace}`, `--manifest ${manifest}`, '--auto-add-overlay', ...flat]
+  })
 }

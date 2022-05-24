@@ -15,12 +15,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FactoryExecTask = void 0;
 const execa_1 = require("execa");
 const __1 = __importDefault(require(".."));
-function FactoryExecTask(name, command, callback) {
+function FactoryExecTask(name, arg, callback) {
     return new __1.default({
         name,
         processer: ({ log, bindAbort }) => __awaiter(this, void 0, void 0, function* () {
             var _a, _b;
-            const proc = (0, execa_1.execaCommand)(Array.isArray(command) ? command.join(' ') : command, {
+            arg = typeof arg === 'function' ? arg() : arg;
+            const command = Array.isArray(arg) ? arg.join(' ') : arg;
+            const proc = (0, execa_1.execaCommand)(command, {
                 env: {
                     PATH: process.env.PATH
                 },

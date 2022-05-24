@@ -1,6 +1,6 @@
 import ApkBuilderConfig from "../../../config";
 import BaseQueueItem from "../base";
-export declare function javac({ classpath, output, inputs, source }: {
+export declare function javac(fn: () => {
     classpath: string;
     output: string;
     inputs: string[];

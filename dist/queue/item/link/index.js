@@ -10,13 +10,13 @@ class LinkQueueItem extends base_1.default {
         return new this;
     }
     task(config) {
-        return (0, aapt2_1.link)({
+        return (0, aapt2_1.link)(() => ({
             outpath: config.apk,
             rjava: config.code,
             namespace: config.androidJar,
             manifest: config.manifest,
             flat: config.getFlatFiles()
-        });
+        }));
     }
 }
 exports.default = LinkQueueItem;
