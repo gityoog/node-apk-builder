@@ -9,7 +9,8 @@ const base_1 = __importDefault(require("../base"));
 function javac(fn) {
     return (0, factory_1.FactoryExecTask)('javac', () => {
         const { classpath, output, inputs, source } = fn();
-        return ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10', `-cp ${classpath};${source};${inputs.join(';')}`, `-d ${output}`, ...inputs];
+        // todo 增量编译 
+        return ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10', `-cp ${classpath}`, `-d ${output}`, ...inputs];
     });
 }
 exports.javac = javac;
