@@ -7,6 +7,6 @@ export default function d8(fn: () => {
 }) {
   return FactoryExecTask('compile dex', () => {
     const { classpath, output, inputs } = fn()
-    return ['d8', `--classpath ${classpath}`, `--output ${output}`, ...inputs]
+    return ['d8', `-JDfile.encoding=UTF-8 --classpath ${classpath}`, `--output ${output}`, ...inputs]
   })
 }

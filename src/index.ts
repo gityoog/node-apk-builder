@@ -54,6 +54,7 @@ export default class ApkBuilder {
       if (changes.has(this.config.res)) {
         this.queue.buildRes()
       }
+      this.logger.info("watchpack", [...changes.values()].join(','))
     })
   }
 

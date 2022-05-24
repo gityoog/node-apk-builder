@@ -5,5 +5,5 @@ export default function apksigner({ apk, key, cert }: {
   key: string
   cert: string
 }) {
-  return FactoryExecTask('apksigner', ["apksigner", "sign", `--key ${key}`, `--cert ${cert}`, apk])
+  return FactoryExecTask('apksigner', ["apksigner", "-JDfile.encoding=UTF-8 sign", `--key ${key}`, `--cert ${cert}`, apk])
 }

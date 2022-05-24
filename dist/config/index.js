@@ -15,7 +15,7 @@ class ApkBuilderConfig {
         this.adb = adb;
         this.render = render;
         if (buildTools) {
-            process.env.PATH += `;${buildTools}`;
+            process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`;
         }
         this.res = path_1.default.join(this.src, 'res');
         this.manifest = path_1.default.join(this.src, 'AndroidManifest.xml');
@@ -50,5 +50,8 @@ class ApkBuilderConfig {
             cwd: this.classes
         }).map(p => path_1.default.join(this.classes, p));
     }
+}
+function isWindows() {
+    return process.platform === 'win32' || process.env.OSTYPE && /^(msys|cygwin)$/.test(process.env.OSTYPE);
 }
 exports.default = ApkBuilderConfig;
