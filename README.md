@@ -10,4 +10,4 @@ $ npm install git+https://github.com/gityoog/node-apk-builder.git --save
 
 ## 使用
 
-编写中...
+查看 <a href="https://github.com/gityoog/apk-builder-template">使用示例</a>
