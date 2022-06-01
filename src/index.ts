@@ -13,7 +13,7 @@ import TaskManager from "./queue/task-manager"
 @Container()
 export default class ApkBuilder {
   static Create(...args: ConstructorParameters<typeof ApkBuilder>) {
-    return Init(new ApkBuilder(...args))
+    return Init(new this(...args))
   }
 
   @Inject() private queue!: ApkBuilderQueue
