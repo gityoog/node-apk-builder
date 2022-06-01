@@ -26,8 +26,7 @@ export default class ApkBuilderLogger {
 
   private update(value: string) {
     if (this.config.log) {
-      fs.appendFile(this.config.log, value + '\n', e => {
-      })
+      fs.appendFileSync(this.config.log, value + '\n')
     }
     this._out?.(value)
   }
