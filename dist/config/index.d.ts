@@ -1,4 +1,4 @@
-declare type options = {
+type options = {
     dist: string;
     src: string;
     androidJar: string;

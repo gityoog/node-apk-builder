@@ -1,5 +1,5 @@
 import Task from "../task";
-declare type updateCallback = (data: {
+type updateCallback = (data: {
     startTime: number;
     endTime: number;
     tasks: {

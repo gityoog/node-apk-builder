@@ -18,8 +18,8 @@ const __1 = __importDefault(require(".."));
 function FactoryExecTask(name, arg, callback) {
     return new __1.default({
         name,
-        processer: ({ log, bindAbort }) => __awaiter(this, void 0, void 0, function* () {
-            var _a, _b;
+        processer: (_a) => __awaiter(this, [_a], void 0, function* ({ log, bindAbort }) {
+            var _b, _c;
             arg = typeof arg === 'function' ? arg() : arg;
             const command = Array.isArray(arg) ? arg.join(' ') : arg;
             const proc = (0, execa_1.execaCommand)(command, {
@@ -28,10 +28,10 @@ function FactoryExecTask(name, arg, callback) {
                 },
                 shell: false
             });
-            (_a = proc.stderr) === null || _a === void 0 ? void 0 : _a.on('data', (data) => {
+            (_b = proc.stderr) === null || _b === void 0 ? void 0 : _b.on('data', (data) => {
                 log(String(data));
             });
-            (_b = proc.stdout) === null || _b === void 0 ? void 0 : _b.on('data', (data) => {
+            (_c = proc.stdout) === null || _c === void 0 ? void 0 : _c.on('data', (data) => {
                 log(String(data));
             });
             bindAbort(() => proc.kill());

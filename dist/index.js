@@ -23,12 +23,12 @@ const task_manager_1 = __importDefault(require("./queue/task-manager"));
 // todo aidl 
 // todo lib 
 let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
+    static Create(...args) {
+        return new ((0, ioc_di_1.Root)()(this))(...args);
+    }
     /** @deprecated Please use ApkBuilder.Create */
     constructor(options) {
         this.config = new config_1.default(options);
-    }
-    static Create(...args) {
-        return (0, ioc_di_1.Init)(new ApkBuilder_1(...args));
     }
     build() {
         this.config.setMode('release');

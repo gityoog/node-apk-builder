@@ -20,14 +20,6 @@ const normal_1 = __importDefault(require("./normal"));
 const loading_1 = __importDefault(require("./loading"));
 const config_1 = __importDefault(require("../config"));
 let ApkBuilderRender = class ApkBuilderRender {
-    constructor() {
-        this.startTime = 0;
-        this.endTime = 0;
-        this.total = 0;
-        this.data = {};
-        this.isDestroyed = false;
-        this.init();
-    }
     init() {
         this.manager.onUpdate(({ startTime, endTime, tasks }) => {
             if (this.isDestroyed) {
@@ -64,6 +56,14 @@ let ApkBuilderRender = class ApkBuilderRender {
     }
     onUpdate(callback) {
         this._update = callback;
+    }
+    constructor() {
+        this.startTime = 0;
+        this.endTime = 0;
+        this.total = 0;
+        this.data = {};
+        this.isDestroyed = false;
+        this.init();
     }
     destroy() {
         this.loading.destroy();

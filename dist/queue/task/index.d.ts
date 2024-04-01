@@ -1,4 +1,4 @@
-declare type TaskProcesser = (task: {
+type TaskProcesser = (task: {
     log: (data: string) => void;
     bindAbort: (callback: () => void) => void;
 }) => Promise<any>;

@@ -10,7 +10,7 @@ class InstallQueueItem extends base_1.default {
         return new this;
     }
     task(config) {
-        return (0, factory_1.FactoryExecTask)('install', ["adb", "install", config.apk]);
+        return (0, factory_1.FactoryExecTask)('install', ["adb", "install", "-r", config.apk]);
     }
 }
 exports.default = InstallQueueItem;

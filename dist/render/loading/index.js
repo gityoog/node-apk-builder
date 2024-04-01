@@ -64,5 +64,5 @@ class RenderLoading {
         this._update = undefined;
     }
 }
-exports.default = RenderLoading;
 RenderLoading.symbol = "\uF666";
+exports.default = RenderLoading;

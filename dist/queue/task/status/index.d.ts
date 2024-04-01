@@ -6,7 +6,7 @@ declare enum Type {
     CANCELED = 4,
     DESTROY = 5
 }
-declare type updateData = {
+type updateData = {
     type: Type;
     data: string[];
     error: string;

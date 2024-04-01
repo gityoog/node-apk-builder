@@ -16,9 +16,6 @@ const ioc_di_1 = require("ioc-di");
 const config_1 = __importDefault(require("../config"));
 const fs_1 = __importDefault(require("fs"));
 let ApkBuilderLogger = class ApkBuilderLogger {
-    constructor() {
-        this.init();
-    }
     init() {
         if (this.config.log) {
             if (fs_1.default.existsSync(this.config.log)) {
@@ -35,10 +32,12 @@ let ApkBuilderLogger = class ApkBuilderLogger {
     update(value) {
         var _a;
         if (this.config.log) {
-            fs_1.default.appendFile(this.config.log, value + '\n', e => {
-            });
+            fs_1.default.appendFileSync(this.config.log, value + '\n');
         }
         (_a = this._out) === null || _a === void 0 ? void 0 : _a.call(this, value);
+    }
+    constructor() {
+        this.init();
     }
     destroy() {
         this._out = undefined;
