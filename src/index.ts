@@ -1,4 +1,4 @@
-import { Container, Destroy, Inject, Service, Init } from "ioc-di"
+import { Container, Destroy, Inject, Service, Root } from "ioc-di"
 import Watchpack from 'watchpack'
 import ApkBuilderQueue from "./queue"
 import ApkBuilderConfig from "./config"
@@ -13,7 +13,7 @@ import TaskManager from "./queue/task-manager"
 @Container()
 export default class ApkBuilder {
   static Create(...args: ConstructorParameters<typeof ApkBuilder>) {
-    return Init(new this(...args))
+    return new (Root()(this))(...args)
   }
 
   @Inject() private queue!: ApkBuilderQueue
