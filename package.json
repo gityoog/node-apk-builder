@@ -7,7 +7,11 @@
     "dev": "node -r ts-swc-register ./script/index.ts",
     "build": "rimraf ./dist && tsc"
   },
-  "author": "",
+  "author": "gityoog",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gityoog/node-apk-builder.git"
+  },
   "license": "ISC",
   "dependencies": {
     "adm-zip": "^0.5.9",
