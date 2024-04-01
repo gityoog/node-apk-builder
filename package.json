@@ -1,6 +1,6 @@
 {
   "name": "apk-builder",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "build simple apk with node",
   "main": "./dist/index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "cli-truncate": "^3.1.0",
     "execa": "^6.1.0",
     "glob": "^8.0.3",
-    "ioc-di": "github:gityoog/ioc-di",
+    "ioc-di": "npm:@gityoog/ioc-di@^1.2.8",
     "log-symbols": "^5.1.0",
     "log-update": "^5.0.1",
     "rimraf": "^3.0.2",
@@ -27,6 +27,6 @@
     "@types/node": "^17.0.35",
     "@types/rimraf": "^3.0.2",
     "@types/watchpack": "^1.1.4",
-    "ts-swc-register": "github:gityoog/ts-swc-register"
+    "ts-swc-register": "^1.2.4"
   }
 }
