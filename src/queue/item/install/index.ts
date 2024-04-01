@@ -7,6 +7,6 @@ export default class InstallQueueItem extends BaseQueueItem {
     return new this
   }
   task(config: ApkBuilderConfig) {
-    return FactoryExecTask('install', ["adb", "install", config.apk])
+    return FactoryExecTask('install', ["adb", "install", "-r", config.apk])
   }
 }
