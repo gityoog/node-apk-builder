@@ -50,7 +50,7 @@ export default class AppendQueueItem extends BaseQueueItem {
       }].concat(
         config.libs ? [{
           path: config.libs,
-          name: 'libs'
+          name: 'lib'
         }] :
           []) : [],
     })
