@@ -7,11 +7,14 @@ export function javac(fn: () => {
   output: string
   inputs: string[]
   source: string
+  lib: string[]
 }) {
   return FactoryExecTask('javac', () => {
-    const { classpath, output, inputs, source } = fn()
+    const { classpath, output, inputs, source, lib } = fn()
     // todo 增量编译 
-    return ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10', `-cp ${classpath}`, `-d ${output}`, ...inputs]
+    return ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10',
+      `-cp ${lib.length > 0 ? '.;' + lib.join(';') + ';' + classpath : classpath}`,
+      `-d ${output}`, ...inputs]
   })
 }
 
@@ -24,7 +27,8 @@ export default class JavacQueueItem extends BaseQueueItem {
       classpath: config.androidJar,
       output: config.classes,
       source: config.code,
-      inputs: config.getJavaFiles()
+      inputs: config.getJavaFiles(),
+      lib: config.lib
     }))
   }
 }

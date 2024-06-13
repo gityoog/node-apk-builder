@@ -7,6 +7,7 @@ type options = {
   androidJar: string
   render?: boolean
   buildTools?: string
+  lib?: string[],
   sign: {
     key: string
     cert: string
@@ -30,6 +31,7 @@ class ApkBuilderConfig {
   adb?: {
     main: string
   }
+  lib: string[]
   res: string
   manifest: string
   code: string
@@ -39,7 +41,7 @@ class ApkBuilderConfig {
   apk!: string
   classes!: string
   dex!: string
-  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true }: options) {
+  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [] }: options) {
     this.src = src
     this.dist = dist
     this.key = sign.key
@@ -47,6 +49,7 @@ class ApkBuilderConfig {
     this.androidJar = androidJar
     this.adb = adb
     this.render = render
+    this.lib = lib
     if (buildTools) {
       process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`
     }
