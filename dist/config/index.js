@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = require("glob");
 const path_1 = __importDefault(require("path"));
 class ApkBuilderConfig {
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [] }) {
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [], libs }) {
         this.src = src;
         this.dist = dist;
         this.key = sign.key;
@@ -23,6 +23,7 @@ class ApkBuilderConfig {
         this.code = path_1.default.join(this.src, 'java');
         this.assets = path_1.default.join(this.src, 'assets');
         this.log = path_1.default.join(this.dist, 'log.txt');
+        this.libs = libs;
         this.setMode('release');
     }
     setMode(mode) {

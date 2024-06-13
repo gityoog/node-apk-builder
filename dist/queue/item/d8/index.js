@@ -13,7 +13,8 @@ class D8QueueItem extends base_1.default {
         return (0, d8_1.default)(() => ({
             classpath: config.androidJar,
             output: config.outpath,
-            inputs: config.getClassesFiles()
+            inputs: config.getClassesFiles(),
+            lib: config.lib
         }));
     }
 }
