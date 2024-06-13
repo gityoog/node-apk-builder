@@ -10,7 +10,6 @@ import TaskManager from "./queue/task-manager"
 // todo lib 
 
 @Service()
-@Container()
 export default class ApkBuilder {
   static Create(...args: ConstructorParameters<typeof ApkBuilder>) {
     return new (Root()(this))(...args)
