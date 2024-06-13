@@ -102,7 +102,6 @@ __decorate([
 ], ApkBuilder.prototype, "destroy", null);
 ApkBuilder = ApkBuilder_1 = __decorate([
     (0, ioc_di_1.Service)(),
-    (0, ioc_di_1.Container)(),
     __metadata("design:paramtypes", [Object])
 ], ApkBuilder);
 exports.default = ApkBuilder;
