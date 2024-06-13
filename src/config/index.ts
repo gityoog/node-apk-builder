@@ -8,6 +8,7 @@ type options = {
   render?: boolean
   buildTools?: string
   lib?: string[],
+  libs?: string
   sign: {
     key: string
     cert: string
@@ -41,7 +42,8 @@ class ApkBuilderConfig {
   apk!: string
   classes!: string
   dex!: string
-  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [] }: options) {
+  libs
+  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [], libs }: options) {
     this.src = src
     this.dist = dist
     this.key = sign.key
@@ -58,6 +60,7 @@ class ApkBuilderConfig {
     this.code = path.join(this.src, 'java')
     this.assets = path.join(this.src, 'assets')
     this.log = path.join(this.dist, 'log.txt')
+    this.libs = libs
     this.setMode('release')
   }
   setMode(mode: string) {

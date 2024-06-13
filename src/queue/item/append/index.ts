@@ -47,7 +47,12 @@ export default class AppendQueueItem extends BaseQueueItem {
       folders: this.addAssets ? [{
         path: config.assets,
         name: 'assets'
-      }] : []
+      }].concat(
+        config.libs ? [{
+          path: config.libs,
+          name: 'libs'
+        }] :
+          []) : [],
     })
   }
   merge(item: this) {
