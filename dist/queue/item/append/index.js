@@ -57,7 +57,7 @@ class AppendQueueItem extends base_1.default {
                     name: 'assets'
                 }].concat(config.libs ? [{
                     path: config.libs,
-                    name: 'libs'
+                    name: 'lib'
                 }] :
                 []) : [],
         });
