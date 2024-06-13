@@ -4,6 +4,7 @@ type options = {
     androidJar: string;
     render?: boolean;
     buildTools?: string;
+    lib?: string[];
     sign: {
         key: string;
         cert: string;
@@ -25,6 +26,7 @@ declare class ApkBuilderConfig {
     adb?: {
         main: string;
     };
+    lib: string[];
     res: string;
     manifest: string;
     code: string;
@@ -34,7 +36,7 @@ declare class ApkBuilderConfig {
     apk: string;
     classes: string;
     dex: string;
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render }: options);
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib }: options);
     setMode(mode: string): void;
     getResFiles(): string[];
     getFlatFiles(): string[];

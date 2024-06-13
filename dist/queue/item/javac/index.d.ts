@@ -5,6 +5,7 @@ export declare function javac(fn: () => {
     output: string;
     inputs: string[];
     source: string;
+    lib: string[];
 }): import("../../task").default;
 export default class JavacQueueItem extends BaseQueueItem {
     static create(): JavacQueueItem;

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = require("glob");
 const path_1 = __importDefault(require("path"));
 class ApkBuilderConfig {
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true }) {
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [] }) {
         this.src = src;
         this.dist = dist;
         this.key = sign.key;
@@ -14,6 +14,7 @@ class ApkBuilderConfig {
         this.androidJar = androidJar;
         this.adb = adb;
         this.render = render;
+        this.lib = lib;
         if (buildTools) {
             process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`;
         }

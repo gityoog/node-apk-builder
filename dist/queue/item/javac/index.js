@@ -8,9 +8,11 @@ const factory_1 = require("../../task/factory");
 const base_1 = __importDefault(require("../base"));
 function javac(fn) {
     return (0, factory_1.FactoryExecTask)('javac', () => {
-        const { classpath, output, inputs, source } = fn();
+        const { classpath, output, inputs, source, lib } = fn();
         // todo 增量编译 
-        return ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10', `-cp ${classpath}`, `-d ${output}`, ...inputs];
+        return ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10',
+            `-cp ${lib.length > 0 ? '.;' + lib.join(';') + ';' + classpath : classpath}`,
+            `-d ${output}`, ...inputs];
     });
 }
 exports.javac = javac;
@@ -23,7 +25,8 @@ class JavacQueueItem extends base_1.default {
             classpath: config.androidJar,
             output: config.classes,
             source: config.code,
-            inputs: config.getJavaFiles()
+            inputs: config.getJavaFiles(),
+            lib: config.lib
         }));
     }
 }
