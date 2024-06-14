@@ -13,6 +13,6 @@ export default class LinkQueueItem extends BaseQueueItem {
       namespace: config.androidJar,
       manifest: config.manifest,
       flat: config.getFlatFiles()
-    }))
+    }), config.encoding.aapt2)
   }
 }

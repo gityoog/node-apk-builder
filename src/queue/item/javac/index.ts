@@ -8,14 +8,14 @@ export function javac(fn: () => {
   inputs: string[]
   source: string
   lib: string[]
-}) {
+}, encoding?: string) {
   return FactoryExecTask('javac', () => {
     const { classpath, output, inputs, source, lib } = fn()
     // todo 增量编译 
     return ['javac', '-encoding UTF-8 -J-Dfile.encoding=UTF-8', '-source 10 -target 10',
       `-cp ${lib.length > 0 ? '.;' + lib.join(';') + ';' + classpath : classpath}`,
       `-d ${output}`, ...inputs]
-  })
+  }, undefined, encoding)
 }
 
 export default class JavacQueueItem extends BaseQueueItem {
@@ -29,6 +29,6 @@ export default class JavacQueueItem extends BaseQueueItem {
       source: config.code,
       inputs: config.getJavaFiles(),
       lib: config.getLibFiles()
-    }))
+    }), config.encoding.javac)
   }
 }

@@ -16,9 +16,9 @@ export function link(fn: () => {
   namespace: string
   manifest: string
   flat: string[]
-}) {
+}, encoding?: string) {
   return FactoryExecTask('link resource', () => {
     const { outpath, rjava, namespace, manifest, flat } = fn()
     return ["aapt2", "link", `-o ${outpath}`, `--java ${rjava}`, `-I ${namespace}`, `--manifest ${manifest}`, '--auto-add-overlay', ...flat]
-  })
+  }, undefined, encoding)
 }

@@ -1,7 +1,8 @@
 import { execaCommand } from "execa"
 import Task from ".."
+import iconv from 'iconv-lite'
 
-export function FactoryExecTask(name: string, arg: string | string[] | (() => string | string[]), callback?: () => Promise<void>) {
+export function FactoryExecTask(name: string, arg: string | string[] | (() => string | string[]), callback?: () => Promise<void>, encoding?: string) {
   return new Task({
     name,
     processer: async ({ log, bindAbort }) => {
@@ -13,11 +14,19 @@ export function FactoryExecTask(name: string, arg: string | string[] | (() => st
         },
         shell: false
       })
+      if (encoding) {
+        if (!iconv.encodingExists(encoding)) {
+          encoding = undefined
+        }
+      }
+      const pushLog = (data: any) => {
+        log(encoding ? iconv.decode(data, encoding) : String(data))
+      }
       proc.stderr?.on('data', (data) => {
-        log(String(data))
+        pushLog(data)
       })
       proc.stdout?.on('data', (data) => {
-        log(String(data))
+        pushLog(data)
       })
       bindAbort(() => proc.kill())
       return proc
