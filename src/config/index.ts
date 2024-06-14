@@ -7,7 +7,7 @@ type options = {
   androidJar: string
   render?: boolean
   buildTools?: string
-  lib?: string[],
+  lib?: string,
   libs?: string
   sign: {
     key: string
@@ -32,7 +32,6 @@ class ApkBuilderConfig {
   adb?: {
     main: string
   }
-  lib: string[]
   res: string
   manifest: string
   code: string
@@ -42,8 +41,9 @@ class ApkBuilderConfig {
   apk!: string
   classes!: string
   dex!: string
+  private lib
   libs
-  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [], libs }: options) {
+  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs }: options) {
     this.src = src
     this.dist = dist
     this.key = sign.key
@@ -51,7 +51,6 @@ class ApkBuilderConfig {
     this.androidJar = androidJar
     this.adb = adb
     this.render = render
-    this.lib = lib
     if (buildTools) {
       process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`
     }
@@ -60,6 +59,7 @@ class ApkBuilderConfig {
     this.code = path.join(this.src, 'java')
     this.assets = path.join(this.src, 'assets')
     this.log = path.join(this.dist, 'log.txt')
+    this.lib = lib
     this.libs = libs
     this.setMode('release')
   }
@@ -88,6 +88,11 @@ class ApkBuilderConfig {
     return glob.sync('**/*.class', {
       cwd: this.classes
     }).map(p => path.join(this.classes, p))
+  }
+  getLibFiles() {
+    return this.lib ? glob.sync('**/*.jar', {
+      cwd: this.lib
+    }).map(p => path.join(this.lib!, p)) : []
   }
 }
 
