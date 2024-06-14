@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = require("glob");
 const path_1 = __importDefault(require("path"));
 class ApkBuilderConfig {
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs }) {
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding }) {
         this.src = src;
         this.dist = dist;
         this.key = sign.key;
@@ -24,6 +24,20 @@ class ApkBuilderConfig {
         this.log = path_1.default.join(this.dist, 'log.txt');
         this.lib = lib;
         this.libs = libs;
+        if (typeof encoding === 'string') {
+            this.encoding = {
+                javac: encoding,
+                d8: encoding,
+                aapt2: encoding
+            };
+        }
+        else {
+            this.encoding = encoding || {
+                javac: undefined,
+                d8: undefined,
+                aapt2: undefined
+            };
+        }
         this.setMode('release');
     }
     setMode(mode) {

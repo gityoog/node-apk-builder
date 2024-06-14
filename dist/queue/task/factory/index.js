@@ -15,7 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FactoryExecTask = void 0;
 const execa_1 = require("execa");
 const __1 = __importDefault(require(".."));
-function FactoryExecTask(name, arg, callback) {
+const iconv_lite_1 = __importDefault(require("iconv-lite"));
+function FactoryExecTask(name, arg, callback, encoding) {
     return new __1.default({
         name,
         processer: (_a) => __awaiter(this, [_a], void 0, function* ({ log, bindAbort }) {
@@ -28,11 +29,19 @@ function FactoryExecTask(name, arg, callback) {
                 },
                 shell: false
             });
+            if (encoding) {
+                if (!iconv_lite_1.default.encodingExists(encoding)) {
+                    encoding = undefined;
+                }
+            }
+            const pushLog = (data) => {
+                log(encoding ? iconv_lite_1.default.decode(data, encoding) : String(data));
+            };
             (_b = proc.stderr) === null || _b === void 0 ? void 0 : _b.on('data', (data) => {
-                log(String(data));
+                pushLog(data);
             });
             (_c = proc.stdout) === null || _c === void 0 ? void 0 : _c.on('data', (data) => {
-                log(String(data));
+                pushLog(data);
             });
             bindAbort(() => proc.kill());
             return proc;

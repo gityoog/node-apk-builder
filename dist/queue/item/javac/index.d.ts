@@ -6,7 +6,7 @@ export declare function javac(fn: () => {
     inputs: string[];
     source: string;
     lib: string[];
-}): import("../../task").default;
+}, encoding?: string): import("../../task").default;
 export default class JavacQueueItem extends BaseQueueItem {
     static create(): JavacQueueItem;
     task(config: ApkBuilderConfig): import("../../task").default;

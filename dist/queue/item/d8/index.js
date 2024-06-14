@@ -15,7 +15,7 @@ class D8QueueItem extends base_1.default {
             output: config.outpath,
             inputs: config.getClassesFiles(),
             lib: config.getLibFiles()
-        }));
+        }), config.encoding.d8);
     }
 }
 exports.default = D8QueueItem;

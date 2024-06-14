@@ -9,10 +9,10 @@ function compile(fn) {
     });
 }
 exports.compile = compile;
-function link(fn) {
+function link(fn, encoding) {
     return (0, factory_1.FactoryExecTask)('link resource', () => {
         const { outpath, rjava, namespace, manifest, flat } = fn();
         return ["aapt2", "link", `-o ${outpath}`, `--java ${rjava}`, `-I ${namespace}`, `--manifest ${manifest}`, '--auto-add-overlay', ...flat];
-    });
+    }, undefined, encoding);
 }
 exports.link = link;

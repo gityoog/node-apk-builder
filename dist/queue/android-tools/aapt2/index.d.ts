@@ -8,4 +8,4 @@ export declare function link(fn: () => {
     namespace: string;
     manifest: string;
     flat: string[];
-}): import("../../task").default;
+}, encoding?: string): import("../../task").default;

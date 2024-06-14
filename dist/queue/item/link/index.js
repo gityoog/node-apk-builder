@@ -16,7 +16,7 @@ class LinkQueueItem extends base_1.default {
             namespace: config.androidJar,
             manifest: config.manifest,
             flat: config.getFlatFiles()
-        }));
+        }), config.encoding.aapt2);
     }
 }
 exports.default = LinkQueueItem;

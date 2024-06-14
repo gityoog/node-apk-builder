@@ -3,4 +3,4 @@ export default function d8(fn: () => {
     output: string;
     inputs: string[];
     lib: string[];
-}): import("../../task").default;
+}, encoding?: string): import("../../task").default;
