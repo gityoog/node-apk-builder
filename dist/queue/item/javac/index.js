@@ -26,7 +26,7 @@ class JavacQueueItem extends base_1.default {
             output: config.classes,
             source: config.code,
             inputs: config.getJavaFiles(),
-            lib: config.lib
+            lib: config.getLibFiles()
         }));
     }
 }

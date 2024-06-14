@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = require("glob");
 const path_1 = __importDefault(require("path"));
 class ApkBuilderConfig {
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib = [], libs }) {
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs }) {
         this.src = src;
         this.dist = dist;
         this.key = sign.key;
@@ -14,7 +14,6 @@ class ApkBuilderConfig {
         this.androidJar = androidJar;
         this.adb = adb;
         this.render = render;
-        this.lib = lib;
         if (buildTools) {
             process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`;
         }
@@ -23,6 +22,7 @@ class ApkBuilderConfig {
         this.code = path_1.default.join(this.src, 'java');
         this.assets = path_1.default.join(this.src, 'assets');
         this.log = path_1.default.join(this.dist, 'log.txt');
+        this.lib = lib;
         this.libs = libs;
         this.setMode('release');
     }
@@ -51,6 +51,11 @@ class ApkBuilderConfig {
         return glob_1.glob.sync('**/*.class', {
             cwd: this.classes
         }).map(p => path_1.default.join(this.classes, p));
+    }
+    getLibFiles() {
+        return this.lib ? glob_1.glob.sync('**/*.jar', {
+            cwd: this.lib
+        }).map(p => path_1.default.join(this.lib, p)) : [];
     }
 }
 function isWindows() {
