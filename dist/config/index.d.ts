@@ -14,6 +14,12 @@ type options = {
     sign: {
         key: string;
         cert: string;
+        jks?: {
+            path: string;
+            alias: string;
+            pass: string;
+            aliasPass: string;
+        };
     };
     adb?: {
         main: string;
@@ -48,6 +54,12 @@ declare class ApkBuilderConfig {
         d8?: string | undefined;
         aapt2?: string | undefined;
     };
+    jks: {
+        path: string;
+        alias: string;
+        pass: string;
+        aliasPass: string;
+    } | undefined;
     constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding }: options);
     setMode(mode: string): void;
     getResFiles(): string[];

@@ -13,7 +13,8 @@ class SignQueueItem extends base_1.default {
         return (0, apksign_1.default)({
             apk: config.apk,
             key: config.key,
-            cert: config.cert
+            cert: config.cert,
+            jks: config.jks
         });
     }
 }

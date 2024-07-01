@@ -24,6 +24,7 @@ class ApkBuilderConfig {
         this.log = path_1.default.join(this.dist, 'log.txt');
         this.lib = lib;
         this.libs = libs;
+        this.jks = sign.jks;
         if (typeof encoding === 'string') {
             this.encoding = {
                 javac: encoding,
