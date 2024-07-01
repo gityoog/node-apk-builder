@@ -17,6 +17,12 @@ type options = {
   sign: {
     key: string
     cert: string
+    jks?: {
+      path: string
+      alias: string
+      pass: string
+      aliasPass: string
+    }
   }
   adb?: {
     main: string
@@ -49,6 +55,7 @@ class ApkBuilderConfig {
   private lib
   libs
   encoding
+  jks
   constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding }: options) {
     this.src = src
     this.dist = dist
@@ -67,6 +74,7 @@ class ApkBuilderConfig {
     this.log = path.join(this.dist, 'log.txt')
     this.lib = lib
     this.libs = libs
+    this.jks = sign.jks
     if (typeof encoding === 'string') {
       this.encoding = {
         javac: encoding,

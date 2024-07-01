@@ -10,7 +10,8 @@ export default class SignQueueItem extends BaseQueueItem {
     return apksigner({
       apk: config.apk,
       key: config.key,
-      cert: config.cert
+      cert: config.cert,
+      jks: config.jks
     })
   }
 }
