@@ -52,7 +52,12 @@ export default class AppendQueueItem extends BaseQueueItem {
           path: config.libs,
           name: 'lib'
         }] :
-          []) : [],
+          []).concat(config.resources.map(res => {
+            return {
+              path: res,
+              name: undefined!
+            }
+          })) : [],
     })
   }
   merge(item: this) {

@@ -24,6 +24,7 @@ type options = {
       aliasPass: string
     }
   }
+  resources?: string[]
   adb?: {
     install?: boolean
     main?: string
@@ -52,11 +53,12 @@ class ApkBuilderConfig {
   apk!: string
   classes!: string
   dex!: string
+  resources
   private lib
   libs
   encoding
   jks
-  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding }: options) {
+  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [] }: options) {
     this.src = src
     this.dist = dist
     this.key = sign.key
@@ -64,6 +66,7 @@ class ApkBuilderConfig {
     this.androidJar = androidJar
     this.adb = adb
     this.render = render
+    this.resources = resources
     if (buildTools) {
       process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`
     }
