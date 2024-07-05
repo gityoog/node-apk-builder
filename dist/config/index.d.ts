@@ -21,6 +21,7 @@ type options = {
             aliasPass: string;
         };
     };
+    resources?: string[];
     adb?: {
         install?: boolean;
         main?: string;
@@ -51,6 +52,7 @@ declare class ApkBuilderConfig {
     apk: string;
     classes: string;
     dex: string;
+    resources: string[];
     private lib;
     libs: string | undefined;
     encoding: {
@@ -64,7 +66,7 @@ declare class ApkBuilderConfig {
         pass: string;
         aliasPass: string;
     } | undefined;
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding }: options);
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources }: options);
     setMode(mode: string): void;
     getResFiles(): string[];
     getFlatFiles(): string[];
