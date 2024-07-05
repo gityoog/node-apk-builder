@@ -10,7 +10,13 @@ class AmStartQueueItem extends base_1.default {
         return new this;
     }
     task(config) {
-        return (0, factory_1.FactoryExecTask)('am start', ["adb", "shell am start", "-n", config.adb.main]);
+        const { main, service } = config.adb;
+        if (service) {
+            return (0, factory_1.FactoryExecTask)('am startservice', ["adb", "shell am startservice", "-n", service]);
+        }
+        else {
+            return (0, factory_1.FactoryExecTask)('am start', ["adb", "shell am start", "-n", main]);
+        }
     }
 }
 exports.default = AmStartQueueItem;

@@ -22,7 +22,9 @@ type options = {
         };
     };
     adb?: {
-        main: string;
+        install?: boolean;
+        main?: string;
+        service?: string;
     };
 };
 declare namespace ApkBuilderConfig {
@@ -35,9 +37,11 @@ declare class ApkBuilderConfig {
     cert: string;
     androidJar: string;
     log: string;
-    adb?: {
-        main: string;
-    };
+    adb: {
+        install?: boolean | undefined;
+        main?: string | undefined;
+        service?: string | undefined;
+    } | undefined;
     res: string;
     manifest: string;
     code: string;

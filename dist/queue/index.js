@@ -69,15 +69,18 @@ let ApkBuilderQueue = class ApkBuilderQueue {
     }
     next() {
         return __awaiter(this, void 0, void 0, function* () {
+            var _a, _b;
             if (!this.lock && this.map.size > 0) {
                 this.lock = true;
                 const tasks = (0, item_1.default)([...this.map.values()].concat([
                     align_1.default.create(),
                     sign_1.default.create()
-                ]).concat(this.config.adb ? [
-                    install_1.default.create(),
-                    am_start_1.default.create()
-                ] : [])).map(item => item.task(this.config));
+                ]).concat(this.config.adb &&
+                    this.config.adb.install !== false
+                    ?
+                        install_1.default.create() :
+                    []).concat(((_a = this.config.adb) === null || _a === void 0 ? void 0 : _a.main) || ((_b = this.config.adb) === null || _b === void 0 ? void 0 : _b.service) ?
+                    am_start_1.default.create() : [])).map(item => item.task(this.config));
                 this.map.clear();
                 yield this.tasks.run(tasks);
                 this.lock = false;
