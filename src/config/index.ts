@@ -25,7 +25,9 @@ type options = {
     }
   }
   adb?: {
-    main: string
+    install?: boolean
+    main?: string
+    service?: string
   }
 }
 
@@ -40,9 +42,7 @@ class ApkBuilderConfig {
   cert: string
   androidJar: string
   log: string
-  adb?: {
-    main: string
-  }
+  adb
   res: string
   manifest: string
   code: string

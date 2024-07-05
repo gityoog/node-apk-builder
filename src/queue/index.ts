@@ -76,10 +76,16 @@ export default class ApkBuilderQueue {
         [...this.map.values()].concat([
           AlignQueueItem.create(),
           SignQueueItem.create()
-        ]).concat(this.config.adb ? [
-          InstallQueueItem.create(),
-          AmStartQueueItem.create()
-        ] : [])
+        ]).concat(
+          this.config.adb &&
+            this.config.adb.install !== false
+            ?
+            InstallQueueItem.create() :
+            []
+        ).concat(
+          this.config.adb?.main || this.config.adb?.service ?
+            AmStartQueueItem.create() : []
+        )
       ).map(item => item.task(this.config))
       this.map.clear()
       await this.tasks.run(tasks)

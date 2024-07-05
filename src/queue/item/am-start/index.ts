@@ -7,6 +7,11 @@ export default class AmStartQueueItem extends BaseQueueItem {
     return new this
   }
   task(config: ApkBuilderConfig) {
-    return FactoryExecTask('am start', ["adb", "shell am start", "-n", config.adb!.main])
+    const { main, service } = config.adb!
+    if (service) {
+      return FactoryExecTask('am startservice', ["adb", "shell am startservice", "-n", service])
+    } else {
+      return FactoryExecTask('am start', ["adb", "shell am start", "-n", main!])
+    }
   }
 }
