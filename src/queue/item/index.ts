@@ -9,8 +9,9 @@ import LinkQueueItem from "./link"
 import ResQueueItem from "./res"
 import AmStartQueueItem from "./am-start"
 import SignQueueItem from "./sign"
+import AidlQueueItem from "./aidl"
 
-const QueueItems = [CleanQueueItem, ResQueueItem, LinkQueueItem, JavacQueueItem, D8QueueItem, AppendQueueItem, AlignQueueItem, SignQueueItem, InstallQueueItem, AmStartQueueItem]
+const QueueItems = [CleanQueueItem, ResQueueItem, LinkQueueItem, AidlQueueItem, JavacQueueItem, D8QueueItem, AppendQueueItem, AlignQueueItem, SignQueueItem, InstallQueueItem, AmStartQueueItem]
 const Index = new Map<Function, number>()
 QueueItems.forEach((item, index) => {
   Index.set(item, index)
