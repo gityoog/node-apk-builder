@@ -28,7 +28,7 @@ let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
     }
     /** @deprecated Please use ApkBuilder.Create */
     constructor(options) {
-        this.lastAIDL = false;
+        this.lastAIDL = true;
         this.config = new config_1.default(options);
     }
     build() {
