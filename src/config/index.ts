@@ -9,6 +9,7 @@ type options = {
   buildTools?: string
   lib?: string,
   libs?: string
+  aidl?: string
   encoding?: {
     javac?: string
     d8?: string
@@ -58,7 +59,8 @@ class ApkBuilderConfig {
   libs
   encoding
   jks
-  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [] }: options) {
+  aidl
+  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl }: options) {
     this.src = src
     this.dist = dist
     this.key = sign.key
@@ -67,6 +69,7 @@ class ApkBuilderConfig {
     this.adb = adb
     this.render = render
     this.resources = resources
+    this.aidl = aidl
     if (buildTools) {
       process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`
     }
@@ -108,6 +111,11 @@ class ApkBuilderConfig {
     return glob.sync('**/*.flat', {
       cwd: this.outpath
     }).map(p => path.join(this.outpath, p))
+  }
+  getAidlFiles() {
+    return this.aidl ? glob.sync('**/*.aidl', {
+      cwd: this.aidl
+    }).map(p => path.join(this.aidl!, p)) : []
   }
   getJavaFiles() {
     return glob.sync('**/*.java', {

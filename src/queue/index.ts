@@ -13,6 +13,7 @@ import SignQueueItem from "./item/sign"
 import SortQueueItem from "./item"
 import TaskManager from "./task-manager"
 import BaseQueueItem from "./item/base"
+import AidlQueueItem from "./item/aidl"
 
 @Service()
 export default class ApkBuilderQueue {
@@ -45,11 +46,17 @@ export default class ApkBuilderQueue {
       AppendQueueItem.assets()
     )
   }
+  buildAidl() {
+    this.push(
+      AidlQueueItem.create()
+    )
+  }
   all() {
     return this.push(
       CleanQueueItem.create(),
       ResQueueItem.create(),
       LinkQueueItem.create(),
+      AidlQueueItem.create(),
       JavacQueueItem.create(),
       D8QueueItem.create(),
       AppendQueueItem.dex(),

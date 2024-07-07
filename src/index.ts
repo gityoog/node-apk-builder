@@ -44,6 +44,9 @@ export default class ApkBuilder {
       if (changes.has(this.config.manifest)) {
         this.queue.buildManifest()
       }
+      if (this.config.aidl && changes.has(this.config.aidl)) {
+        this.queue.buildAidl()
+      }
       if (changes.has(this.config.code)) {
         this.queue.buildSource()
       }
