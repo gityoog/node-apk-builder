@@ -28,6 +28,7 @@ let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
     }
     /** @deprecated Please use ApkBuilder.Create */
     constructor(options) {
+        this.lastAIDL = false;
         this.config = new config_1.default(options);
     }
     build() {
@@ -48,8 +49,12 @@ let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
             }
             if (this.config.aidl && changes.has(this.config.aidl)) {
                 this.queue.buildAidl();
+                this.lastAIDL = true;
             }
-            if (changes.has(this.config.code)) {
+            else {
+                this.lastAIDL = false;
+            }
+            if (!this.lastAIDL && changes.has(this.config.code)) {
                 this.queue.buildSource();
             }
             if (changes.has(this.config.assets)) {

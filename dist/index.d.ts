@@ -10,6 +10,7 @@ export default class ApkBuilder {
     /** @deprecated Please use ApkBuilder.Create */
     constructor(options: ApkBuilderConfig.Options);
     build(): Promise<void>;
+    private lastAIDL;
     private watchpack?;
     watch(): void;
     onLog(callback: (value: string) => void): void;
