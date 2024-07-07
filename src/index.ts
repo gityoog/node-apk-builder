@@ -30,7 +30,7 @@ export default class ApkBuilder {
     this.config.setMode('release')
     return this.queue.all()
   }
-
+  private lastAIDL = false
   private watchpack?: Watchpack
   watch() {
     this.config.setMode('debug')
@@ -48,8 +48,11 @@ export default class ApkBuilder {
       }
       if (this.config.aidl && changes.has(this.config.aidl)) {
         this.queue.buildAidl()
+        this.lastAIDL = true
+      } else {
+        this.lastAIDL = false
       }
-      if (changes.has(this.config.code)) {
+      if (!this.lastAIDL && changes.has(this.config.code)) {
         this.queue.buildSource()
       }
       if (changes.has(this.config.assets)) {
