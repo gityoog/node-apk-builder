@@ -48,7 +48,10 @@ export default class ApkBuilderQueue {
   }
   buildAidl() {
     this.push(
-      AidlQueueItem.create()
+      AidlQueueItem.create(),
+      JavacQueueItem.create(),
+      D8QueueItem.create(),
+      AppendQueueItem.dex()
     )
   }
   all() {
