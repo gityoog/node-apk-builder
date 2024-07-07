@@ -52,21 +52,20 @@ export default class ApkBuilderQueue {
     )
   }
   all() {
-    if (this.config.aidl) {
-      this.push(AidlQueueItem.create())
-    }
     return this.push(
       CleanQueueItem.create(),
       ResQueueItem.create(),
       LinkQueueItem.create(),
+      this.config.aidl ? AidlQueueItem.create() : undefined,
       JavacQueueItem.create(),
       D8QueueItem.create(),
       AppendQueueItem.dex(),
       AppendQueueItem.assets()
     )
   }
-  private push(...data: BaseQueueItem[]) {
+  private push(...data: Array<BaseQueueItem | undefined>) {
     data.forEach(item => {
+      if (!item) return
       if (this.map.has(item.constructor)) {
         const old = this.map.get(item.constructor)!
         this.map.set(item.constructor, item.merge(old))
