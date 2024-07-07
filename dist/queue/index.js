@@ -57,13 +57,12 @@ let ApkBuilderQueue = class ApkBuilderQueue {
         this.push(aidl_1.default.create());
     }
     all() {
-        if (this.config.aidl) {
-            this.push(aidl_1.default.create());
-        }
-        return this.push(clean_1.default.create(), res_1.default.create(), link_1.default.create(), javac_1.default.create(), d8_1.default.create(), append_1.default.dex(), append_1.default.assets());
+        return this.push(clean_1.default.create(), res_1.default.create(), link_1.default.create(), this.config.aidl ? aidl_1.default.create() : undefined, javac_1.default.create(), d8_1.default.create(), append_1.default.dex(), append_1.default.assets());
     }
     push(...data) {
         data.forEach(item => {
+            if (!item)
+                return;
             if (this.map.has(item.constructor)) {
                 const old = this.map.get(item.constructor);
                 this.map.set(item.constructor, item.merge(old));
