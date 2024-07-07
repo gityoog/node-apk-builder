@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = require("glob");
 const path_1 = __importDefault(require("path"));
 class ApkBuilderConfig {
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [] }) {
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl }) {
         this.src = src;
         this.dist = dist;
         this.key = sign.key;
@@ -15,6 +15,7 @@ class ApkBuilderConfig {
         this.adb = adb;
         this.render = render;
         this.resources = resources;
+        this.aidl = aidl;
         if (buildTools) {
             process.env.PATH += (isWindows() ? ';' : ':') + `${buildTools}`;
         }
@@ -57,6 +58,11 @@ class ApkBuilderConfig {
         return glob_1.glob.sync('**/*.flat', {
             cwd: this.outpath
         }).map(p => path_1.default.join(this.outpath, p));
+    }
+    getAidlFiles() {
+        return this.aidl ? glob_1.glob.sync('**/*.aidl', {
+            cwd: this.aidl
+        }).map(p => path_1.default.join(this.aidl, p)) : [];
     }
     getJavaFiles() {
         return glob_1.glob.sync('**/*.java', {

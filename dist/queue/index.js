@@ -35,6 +35,7 @@ const am_start_1 = __importDefault(require("./item/am-start"));
 const sign_1 = __importDefault(require("./item/sign"));
 const item_1 = __importDefault(require("./item"));
 const task_manager_1 = __importDefault(require("./task-manager"));
+const aidl_1 = __importDefault(require("./item/aidl"));
 let ApkBuilderQueue = class ApkBuilderQueue {
     constructor() {
         this.map = new Map;
@@ -52,8 +53,11 @@ let ApkBuilderQueue = class ApkBuilderQueue {
     buildAssets() {
         this.push(append_1.default.assets());
     }
+    buildAidl() {
+        this.push(aidl_1.default.create());
+    }
     all() {
-        return this.push(clean_1.default.create(), res_1.default.create(), link_1.default.create(), javac_1.default.create(), d8_1.default.create(), append_1.default.dex(), append_1.default.assets());
+        return this.push(clean_1.default.create(), res_1.default.create(), link_1.default.create(), aidl_1.default.create(), javac_1.default.create(), d8_1.default.create(), append_1.default.dex(), append_1.default.assets());
     }
     push(...data) {
         data.forEach(item => {

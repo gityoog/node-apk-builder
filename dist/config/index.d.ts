@@ -6,6 +6,7 @@ type options = {
     buildTools?: string;
     lib?: string;
     libs?: string;
+    aidl?: string;
     encoding?: {
         javac?: string;
         d8?: string;
@@ -66,10 +67,12 @@ declare class ApkBuilderConfig {
         pass: string;
         aliasPass: string;
     } | undefined;
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources }: options);
+    aidl: string | undefined;
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources, aidl }: options);
     setMode(mode: string): void;
     getResFiles(): string[];
     getFlatFiles(): string[];
+    getAidlFiles(): string[];
     getJavaFiles(): string[];
     getClassesFiles(): string[];
     getLibFiles(): string[];

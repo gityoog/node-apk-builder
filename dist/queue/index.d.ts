@@ -5,6 +5,7 @@ export default class ApkBuilderQueue {
     buildManifest(): void;
     buildRes(): void;
     buildAssets(): void;
+    buildAidl(): void;
     all(): Promise<void>;
     private push;
     private tasks;
