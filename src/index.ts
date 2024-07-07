@@ -39,7 +39,9 @@ export default class ApkBuilder {
       aggregateTimeout: 1000,
       ignored: /R\.java/
     })
-    this.watchpack.watch([this.config.manifest], [this.config.code, this.config.assets, this.config.res])
+    this.watchpack.watch([this.config.manifest], [this.config.code, this.config.assets, this.config.res].concat(
+      this.config.aidl ? [this.config.aidl] : []
+    ))
     this.watchpack.on("aggregated", (changes: Set<string>) => {
       if (changes.has(this.config.manifest)) {
         this.queue.buildManifest()

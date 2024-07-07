@@ -52,11 +52,13 @@ export default class ApkBuilderQueue {
     )
   }
   all() {
+    if (this.config.aidl) {
+      this.push(AidlQueueItem.create())
+    }
     return this.push(
       CleanQueueItem.create(),
       ResQueueItem.create(),
       LinkQueueItem.create(),
-      AidlQueueItem.create(),
       JavacQueueItem.create(),
       D8QueueItem.create(),
       AppendQueueItem.dex(),
