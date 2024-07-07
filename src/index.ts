@@ -30,7 +30,7 @@ export default class ApkBuilder {
     this.config.setMode('release')
     return this.queue.all()
   }
-  private lastAIDL = false
+  private lastAIDL = true
   private watchpack?: Watchpack
   watch() {
     this.config.setMode('debug')
