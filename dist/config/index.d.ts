@@ -2,6 +2,7 @@ type options = {
     dist: string;
     src: string;
     androidJar: string;
+    main?: string[];
     render?: boolean;
     buildTools?: string;
     lib?: string;
@@ -68,7 +69,8 @@ declare class ApkBuilderConfig {
         aliasPass: string;
     } | undefined;
     aidl: string | undefined;
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources, aidl }: options);
+    main: string[] | undefined;
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources, aidl, main }: options);
     setMode(mode: string): void;
     getResFiles(): string[];
     getFlatFiles(): string[];

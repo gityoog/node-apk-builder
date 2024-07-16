@@ -22,7 +22,7 @@ class JavacQueueItem extends base_1.default {
     }
     task(config) {
         return javac(() => ({
-            classpath: config.androidJar,
+            classpath: config.main ? [config.androidJar, config.code].join(';') : config.androidJar,
             output: config.classes,
             source: config.code,
             inputs: config.getJavaFiles(),

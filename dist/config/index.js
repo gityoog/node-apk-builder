@@ -6,8 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = require("glob");
 const path_1 = __importDefault(require("path"));
 class ApkBuilderConfig {
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl }) {
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main }) {
         this.src = src;
+        this.main = main;
         this.dist = dist;
         this.key = sign.key;
         this.cert = sign.cert;
@@ -65,6 +66,9 @@ class ApkBuilderConfig {
         }).map(p => path_1.default.join(this.aidl, p)) : [];
     }
     getJavaFiles() {
+        if (this.main) {
+            return this.main.map(p => path_1.default.join(this.code, p));
+        }
         return glob_1.glob.sync('**/*.java', {
             cwd: this.code
         }).map(p => path_1.default.join(this.code, p));
