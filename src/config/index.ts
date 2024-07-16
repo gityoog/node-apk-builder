@@ -5,6 +5,7 @@ type options = {
   dist: string
   src: string
   androidJar: string
+  main?: string[]
   render?: boolean
   buildTools?: string
   lib?: string,
@@ -60,8 +61,10 @@ class ApkBuilderConfig {
   encoding
   jks
   aidl
-  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl }: options) {
+  main
+  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main }: options) {
     this.src = src
+    this.main = main
     this.dist = dist
     this.key = sign.key
     this.cert = sign.cert
@@ -118,6 +121,9 @@ class ApkBuilderConfig {
     }).map(p => path.join(this.aidl!, p)) : []
   }
   getJavaFiles() {
+    if (this.main) {
+      return this.main.map(p => path.join(this.code, p))
+    }
     return glob.sync('**/*.java', {
       cwd: this.code
     }).map(p => path.join(this.code, p))

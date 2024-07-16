@@ -24,7 +24,7 @@ export default class JavacQueueItem extends BaseQueueItem {
   }
   task(config: ApkBuilderConfig) {
     return javac(() => ({
-      classpath: config.androidJar,
+      classpath: config.main ? [config.androidJar, config.code].join(';') : config.androidJar,
       output: config.classes,
       source: config.code,
       inputs: config.getJavaFiles(),
