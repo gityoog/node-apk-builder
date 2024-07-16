@@ -122,13 +122,16 @@ class ApkBuilderConfig {
   }
   getJavaFiles() {
     if (this.main) {
-      return this.main.map(p => path.join(this.code, p))
+      return this.main.map(p => path.join(this.code, p + '.java'))
     }
     return glob.sync('**/*.java', {
       cwd: this.code
     }).map(p => path.join(this.code, p))
   }
   getClassesFiles() {
+    if (this.main) {
+      return this.main.map(p => path.join(this.classes, p + '.class'))
+    }
     return glob.sync('**/*.class', {
       cwd: this.classes
     }).map(p => path.join(this.classes, p))
