@@ -67,13 +67,16 @@ class ApkBuilderConfig {
     }
     getJavaFiles() {
         if (this.main) {
-            return this.main.map(p => path_1.default.join(this.code, p));
+            return this.main.map(p => path_1.default.join(this.code, p + '.java'));
         }
         return glob_1.glob.sync('**/*.java', {
             cwd: this.code
         }).map(p => path_1.default.join(this.code, p));
     }
     getClassesFiles() {
+        if (this.main) {
+            return this.main.map(p => path_1.default.join(this.classes, p + '.class'));
+        }
         return glob_1.glob.sync('**/*.class', {
             cwd: this.classes
         }).map(p => path_1.default.join(this.classes, p));

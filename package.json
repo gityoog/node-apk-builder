@@ -1,6 +1,6 @@
 {
   "name": "node-apk-builder",
-  "version": "1.1.9",
+  "version": "1.2.0",
   "description": "build simple apk with node",
   "main": "./dist/index.js",
   "scripts": {
