@@ -3,13 +3,13 @@ import ApkBuilderConfig from "../../../config"
 import AdmZip from 'adm-zip'
 import Task from "../../task"
 
-export function appendApk({ apk, files, folders }: { apk: string, files: { name?: string, path: string }[], folders: { name?: string, path: string }[] }) {
+export function appendApk({ apk, files, folders }: { apk: string, files: { name?: string, path: string, alias?: string }[], folders: { name?: string, path: string }[] }) {
   return new Task({
     name: 'append',
     processer: () => new Promise<void>((resolve, reject) => {
       const zip = new AdmZip(apk)
       files.forEach(file => {
-        zip.addLocalFile(file.path, file.name)
+        zip.addLocalFile(file.path, file.name, file.alias)
       })
       folders.forEach(folder => {
         zip.addLocalFolder(folder.path, folder.name)
@@ -42,8 +42,14 @@ export default class AppendQueueItem extends BaseQueueItem {
     return appendApk({
       apk: config.apk,
       files: this.addDex ? [{
-        path: config.dex
-      }] : [],
+        path: config.dex,
+        alias: undefined as string | undefined
+      }].concat(
+        config.getLibFiles().length > 0 ? [{
+          path: config.jarDex,
+          alias: 'classes2.dex'
+        }] : []
+      ) : [],
       folders: this.addAssets ? [{
         path: config.assets,
         name: 'assets'

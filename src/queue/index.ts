@@ -14,6 +14,7 @@ import SortQueueItem from "./item"
 import TaskManager from "./task-manager"
 import BaseQueueItem from "./item/base"
 import AidlQueueItem from "./item/aidl"
+import JarD8QueueItem from "./item/jard8"
 
 @Service()
 export default class ApkBuilderQueue {
@@ -61,6 +62,7 @@ export default class ApkBuilderQueue {
       LinkQueueItem.create(),
       this.config.aidl ? AidlQueueItem.create() : undefined,
       JavacQueueItem.create(),
+      this.config.getLibFiles().length > 0 ? JarD8QueueItem.create() : undefined,
       D8QueueItem.create(),
       AppendQueueItem.dex(),
       AppendQueueItem.assets()

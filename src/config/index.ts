@@ -62,6 +62,8 @@ class ApkBuilderConfig {
   jks
   aidl
   main
+  jarDex!: string
+  jarD8Out!: string
   constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main }: options) {
     this.src = src
     this.main = main
@@ -104,6 +106,8 @@ class ApkBuilderConfig {
     this.apk = path.join(this.outpath, 'app.apk')
     this.classes = path.join(this.outpath, 'classes')
     this.dex = path.join(this.outpath, 'classes.dex')
+    this.jarD8Out = path.join(this.outpath, 'dex-jar')
+    this.jarDex = path.join(this.jarD8Out, 'classes.dex')
   }
   getResFiles() {
     return glob.sync('**/*.*', {
