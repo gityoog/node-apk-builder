@@ -14,7 +14,8 @@ const res_1 = __importDefault(require("./res"));
 const am_start_1 = __importDefault(require("./am-start"));
 const sign_1 = __importDefault(require("./sign"));
 const aidl_1 = __importDefault(require("./aidl"));
-const QueueItems = [clean_1.default, res_1.default, link_1.default, aidl_1.default, javac_1.default, d8_1.default, append_1.default, align_1.default, sign_1.default, install_1.default, am_start_1.default];
+const jard8_1 = __importDefault(require("./jard8"));
+const QueueItems = [clean_1.default, res_1.default, link_1.default, aidl_1.default, javac_1.default, d8_1.default, jard8_1.default, append_1.default, align_1.default, sign_1.default, install_1.default, am_start_1.default];
 const Index = new Map();
 QueueItems.forEach((item, index) => {
     Index.set(item, index);

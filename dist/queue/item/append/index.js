@@ -13,7 +13,7 @@ function appendApk({ apk, files, folders }) {
         processer: () => new Promise((resolve, reject) => {
             const zip = new adm_zip_1.default(apk);
             files.forEach(file => {
-                zip.addLocalFile(file.path, file.name);
+                zip.addLocalFile(file.path, file.name, file.alias);
             });
             folders.forEach(folder => {
                 zip.addLocalFolder(folder.path, folder.name);
@@ -50,8 +50,12 @@ class AppendQueueItem extends base_1.default {
         return appendApk({
             apk: config.apk,
             files: this.addDex ? [{
-                    path: config.dex
-                }] : [],
+                    path: config.dex,
+                    alias: undefined
+                }].concat(config.getLibFiles().length > 0 ? [{
+                    path: config.jarDex,
+                    alias: 'classes2.dex'
+                }] : []) : [],
             folders: this.addAssets ? [{
                     path: config.assets,
                     name: 'assets'

@@ -49,6 +49,8 @@ class ApkBuilderConfig {
         this.apk = path_1.default.join(this.outpath, 'app.apk');
         this.classes = path_1.default.join(this.outpath, 'classes');
         this.dex = path_1.default.join(this.outpath, 'classes.dex');
+        this.jarD8Out = path_1.default.join(this.outpath, 'dex-jar');
+        this.jarDex = path_1.default.join(this.jarD8Out, 'classes.dex');
     }
     getResFiles() {
         return glob_1.glob.sync('**/*.*', {

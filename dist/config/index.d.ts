@@ -70,6 +70,8 @@ declare class ApkBuilderConfig {
     } | undefined;
     aidl: string | undefined;
     main: string[] | undefined;
+    jarDex: string;
+    jarD8Out: string;
     constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources, aidl, main }: options);
     setMode(mode: string): void;
     getResFiles(): string[];

@@ -6,6 +6,7 @@ export declare function appendApk({ apk, files, folders }: {
     files: {
         name?: string;
         path: string;
+        alias?: string;
     }[];
     folders: {
         name?: string;
