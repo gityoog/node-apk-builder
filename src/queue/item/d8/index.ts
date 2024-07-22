@@ -10,7 +10,7 @@ export default class D8QueueItem extends BaseQueueItem {
     return d8(() => ({
       lib: config.androidJar,
       output: config.outpath,
-      inputs: config.getClassesFiles()
+      classes: config.classes
     }), config.encoding.d8)
   }
 }
