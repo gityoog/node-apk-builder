@@ -1,3 +1,8 @@
+type buildConfig = {
+    package: string;
+    dev: Record<string, any>;
+    prod: Record<string, any>;
+};
 type options = {
     dist: string;
     src: string;
@@ -23,12 +28,14 @@ type options = {
             aliasPass: string;
         };
     };
+    buildConfig?: buildConfig;
     resources?: string[];
     adb?: {
         install?: boolean;
         main?: string;
         service?: string;
     };
+    autoVersion?: boolean;
 };
 declare namespace ApkBuilderConfig {
     type Options = options;
@@ -72,8 +79,12 @@ declare class ApkBuilderConfig {
     main: string[] | undefined;
     jarDex: string;
     jarD8Out: string;
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources, aidl, main }: options);
-    setMode(mode: string): void;
+    buildConfig: buildConfig | undefined;
+    autoVersion: boolean;
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources, aidl, main, buildConfig, autoVersion }: options);
+    setDev(): void;
+    setProd(): void;
+    private setMode;
     getResFiles(): string[];
     getFlatFiles(): string[];
     getAidlFiles(): string[];

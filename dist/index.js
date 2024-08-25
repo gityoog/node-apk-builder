@@ -20,6 +20,7 @@ const config_1 = __importDefault(require("./config"));
 const logger_1 = __importDefault(require("./logger"));
 const render_1 = __importDefault(require("./render"));
 const task_manager_1 = __importDefault(require("./queue/task-manager"));
+const fs_1 = __importDefault(require("fs"));
 // todo aidl 
 // todo lib 
 let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
@@ -32,11 +33,18 @@ let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
         this.config = new config_1.default(options);
     }
     build() {
-        this.config.setMode('release');
+        this.config.setProd();
+        if (this.config.autoVersion) {
+            fs_1.default.writeFileSync(this.config.manifest, fs_1.default.readFileSync(this.config.manifest, 'utf-8').replace(/android:versionCode="[^"]+"/, (value) => {
+                return value.replace(/\d+/, (value) => {
+                    return String(Number(value) + 1);
+                });
+            }));
+        }
         return this.queue.all();
     }
     watch() {
-        this.config.setMode('debug');
+        this.config.setDev();
         this.queue.all();
         this.watchpack = new watchpack_1.default({
             aggregateTimeout: 1000,

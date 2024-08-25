@@ -5,8 +5,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const glob_1 = require("glob");
 const path_1 = __importDefault(require("path"));
+const fs_1 = __importDefault(require("fs"));
+const util_1 = require("../util");
 class ApkBuilderConfig {
-    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main }) {
+    constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main, buildConfig, autoVersion = false }) {
         this.src = src;
         this.main = main;
         this.dist = dist;
@@ -42,6 +44,13 @@ class ApkBuilderConfig {
                 aapt2: undefined
             };
         }
+        this.autoVersion = autoVersion;
+        this.buildConfig = buildConfig;
+    }
+    setDev() {
+        this.setMode('debug');
+    }
+    setProd() {
         this.setMode('release');
     }
     setMode(mode) {
@@ -51,6 +60,19 @@ class ApkBuilderConfig {
         this.dex = path_1.default.join(this.outpath, 'classes.dex');
         this.jarD8Out = path_1.default.join(this.outpath, 'dex-jar');
         this.jarDex = path_1.default.join(this.jarD8Out, 'classes.dex');
+        if (this.buildConfig) {
+            const isDev = mode === 'debug';
+            const isProd = mode === 'release';
+            const folder = this.buildConfig.package.split('.');
+            const envs = isDev ? this.buildConfig.dev : isProd ? this.buildConfig.prod : {};
+            envs.mode = mode;
+            envs.isDev = isDev;
+            envs.isProd = isProd;
+            fs_1.default.writeFileSync(path_1.default.join(this.src, "java", ...folder, "BuildConfig.java"), `package ${this.buildConfig.package};
+public class BuildConfig {
+${Object.keys(envs).map(k => (0, util_1.valueToJava)(k, envs[k], 1)).join('\n')}
+}`);
+        }
     }
     getResFiles() {
         return glob_1.glob.sync('**/*.*', {
