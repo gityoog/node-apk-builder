@@ -1,5 +1,13 @@
 import { glob } from 'glob'
 import path from 'path'
+import fs from 'fs'
+import { valueToJava } from '../util'
+
+type buildConfig = {
+  package: string
+  dev: Record<string, any>
+  prod: Record<string, any>
+}
 
 type options = {
   dist: string
@@ -26,12 +34,14 @@ type options = {
       aliasPass: string
     }
   }
+  buildConfig?: buildConfig
   resources?: string[]
   adb?: {
     install?: boolean
     main?: string
     service?: string
   }
+  autoVersion?: boolean
 }
 
 namespace ApkBuilderConfig {
@@ -64,7 +74,9 @@ class ApkBuilderConfig {
   main
   jarDex!: string
   jarD8Out!: string
-  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main }: options) {
+  buildConfig
+  autoVersion
+  constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main, buildConfig, autoVersion = false }: options) {
     this.src = src
     this.main = main
     this.dist = dist
@@ -99,15 +111,36 @@ class ApkBuilderConfig {
         aapt2: undefined
       }
     }
+    this.autoVersion = autoVersion
+    this.buildConfig = buildConfig
+  }
+  setDev() {
+    this.setMode('debug')
+  }
+  setProd() {
     this.setMode('release')
   }
-  setMode(mode: string) {
+  private setMode(mode: 'debug' | 'release') {
     this.outpath = path.join(this.dist, mode)
     this.apk = path.join(this.outpath, 'app.apk')
     this.classes = path.join(this.outpath, 'classes')
     this.dex = path.join(this.outpath, 'classes.dex')
     this.jarD8Out = path.join(this.outpath, 'dex-jar')
     this.jarDex = path.join(this.jarD8Out, 'classes.dex')
+    if (this.buildConfig) {
+      const isDev = mode === 'debug'
+      const isProd = mode === 'release'
+      const folder = this.buildConfig.package.split('.')
+      const envs = isDev ? this.buildConfig.dev : isProd ? this.buildConfig.prod : {}
+      envs.mode = mode
+      envs.isDev = isDev
+      envs.isProd = isProd
+      fs.writeFileSync(path.join(this.src, "java", ...folder, "BuildConfig.java"),
+        `package ${this.buildConfig.package};
+public class BuildConfig {
+${Object.keys(envs).map(k => valueToJava(k, envs[k], 1)).join('\n')}
+}`)
+    }
   }
   getResFiles() {
     return glob.sync('**/*.*', {

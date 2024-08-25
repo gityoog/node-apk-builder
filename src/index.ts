@@ -5,9 +5,7 @@ import ApkBuilderConfig from "./config"
 import ApkBuilderLogger from "./logger"
 import ApkBuilderRender from "./render"
 import TaskManager from "./queue/task-manager"
-
-// todo aidl 
-// todo lib 
+import fs from 'fs'
 
 @Service()
 export default class ApkBuilder {
@@ -27,13 +25,20 @@ export default class ApkBuilder {
   }
 
   build() {
-    this.config.setMode('release')
+    this.config.setProd()
+    if (this.config.autoVersion) {
+      fs.writeFileSync(this.config.manifest, fs.readFileSync(this.config.manifest, 'utf-8').replace(/android:versionCode="[^"]+"/, (value) => {
+        return value.replace(/\d+/, (value) => {
+          return String(Number(value) + 1)
+        })
+      }))
+    }
     return this.queue.all()
   }
   private lastAIDL = true
   private watchpack?: Watchpack
   watch() {
-    this.config.setMode('debug')
+    this.config.setDev()
     this.queue.all()
     this.watchpack = new Watchpack({
       aggregateTimeout: 1000,
