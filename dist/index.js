@@ -8,6 +8,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -31,15 +40,18 @@ let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
         this.config = new config_1.default(options);
     }
     build() {
-        this.config.setProd();
-        if (this.config.autoVersion) {
-            fs_1.default.writeFileSync(this.config.manifest, fs_1.default.readFileSync(this.config.manifest, 'utf-8').replace(/android:versionCode="[^"]+"/, (value) => {
-                return value.replace(/\d+/, (value) => {
-                    return String(Number(value) + 1);
-                });
-            }));
-        }
-        return this.queue.all();
+        return __awaiter(this, void 0, void 0, function* () {
+            this.config.setProd();
+            const result = yield this.queue.all();
+            if (this.config.autoVersion) {
+                fs_1.default.writeFileSync(this.config.manifest, fs_1.default.readFileSync(this.config.manifest, 'utf-8').replace(/android:versionCode="[^"]+"/, (value) => {
+                    return value.replace(/\d+/, (value) => {
+                        return String(Number(value) + 1);
+                    });
+                }));
+            }
+            return result;
+        });
     }
     watch() {
         this.config.setDev();
