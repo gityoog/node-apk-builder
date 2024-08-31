@@ -5,8 +5,7 @@ import { valueToJava } from '../util'
 
 type buildConfig = {
   package: string
-  dev: Record<string, any>
-  prod: Record<string, any>
+  env: Record<string, any>
 }
 
 type options = {
@@ -76,6 +75,8 @@ class ApkBuilderConfig {
   jarD8Out!: string
   buildConfig
   autoVersion
+  isDev = false
+  isProd = false
   constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main, buildConfig, autoVersion = false }: options) {
     this.src = src
     this.main = main
@@ -115,26 +116,32 @@ class ApkBuilderConfig {
     this.buildConfig = buildConfig
   }
   setDev() {
-    this.setMode('debug')
+    this.isDev = true
+    this.isProd = false
+    this.init()
   }
   setProd() {
-    this.setMode('release')
+    this.isDev = false
+    this.isProd = true
+    this.init()
   }
-  private setMode(mode: 'debug' | 'release') {
-    this.outpath = path.join(this.dist, mode)
+  private init() {
+    this.outpath = path.join(this.dist, this.isDev ? 'debug' : 'release')
     this.apk = path.join(this.outpath, 'app.apk')
     this.classes = path.join(this.outpath, 'classes')
     this.dex = path.join(this.outpath, 'classes.dex')
     this.jarD8Out = path.join(this.outpath, 'dex-jar')
     this.jarDex = path.join(this.jarD8Out, 'classes.dex')
+    const mode = process.argv.find(v => v.startsWith('--mode='))?.split('=')[1] || (this.isDev ? 'debug' : 'release')
+    this.setMode(mode)
+  }
+  private setMode(mode: string = "") {
     if (this.buildConfig) {
-      const isDev = mode === 'debug'
-      const isProd = mode === 'release'
       const folder = this.buildConfig.package.split('.')
-      const envs = isDev ? this.buildConfig.dev : isProd ? this.buildConfig.prod : {}
+      const envs = this.buildConfig.env[mode] || {}
       envs.mode = mode
-      envs.isDev = isDev
-      envs.isProd = isProd
+      envs.isDev = this.isDev
+      envs.isProd = this.isProd
       fs.writeFileSync(path.join(this.src, "java", ...folder, "BuildConfig.java"),
         `package ${this.buildConfig.package};
 public class BuildConfig {
