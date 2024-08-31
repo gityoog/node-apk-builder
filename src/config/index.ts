@@ -126,13 +126,13 @@ class ApkBuilderConfig {
     this.init()
   }
   private init() {
-    this.outpath = path.join(this.dist, this.isDev ? 'debug' : 'release')
+    const mode = process.argv.find(v => v.startsWith('--mode=') || v.startsWith('mode='))?.split('=')[1] || (this.isDev ? 'debug' : 'release')
+    this.outpath = path.join(this.dist, mode)
     this.apk = path.join(this.outpath, 'app.apk')
     this.classes = path.join(this.outpath, 'classes')
     this.dex = path.join(this.outpath, 'classes.dex')
     this.jarD8Out = path.join(this.outpath, 'dex-jar')
     this.jarDex = path.join(this.jarD8Out, 'classes.dex')
-    const mode = process.argv.find(v => v.startsWith('--mode=') || v.startsWith('mode='))?.split('=')[1] || (this.isDev ? 'debug' : 'release')
     this.setMode(mode)
   }
   private setMode(mode: string = "") {

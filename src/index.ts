@@ -24,8 +24,9 @@ export default class ApkBuilder {
     this.config = new ApkBuilderConfig(options)
   }
 
-  build() {
+  async build() {
     this.config.setProd()
+    const result = await this.queue.all()
     if (this.config.autoVersion) {
       fs.writeFileSync(this.config.manifest, fs.readFileSync(this.config.manifest, 'utf-8').replace(/android:versionCode="[^"]+"/, (value) => {
         return value.replace(/\d+/, (value) => {
@@ -33,7 +34,7 @@ export default class ApkBuilder {
         })
       }))
     }
-    return this.queue.all()
+    return result
   }
   private lastAIDL = true
   private watchpack?: Watchpack
