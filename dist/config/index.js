@@ -67,7 +67,7 @@ class ApkBuilderConfig {
         this.dex = path_1.default.join(this.outpath, 'classes.dex');
         this.jarD8Out = path_1.default.join(this.outpath, 'dex-jar');
         this.jarDex = path_1.default.join(this.jarD8Out, 'classes.dex');
-        const mode = ((_a = process.argv.find(v => v.startsWith('--mode='))) === null || _a === void 0 ? void 0 : _a.split('=')[1]) || (this.isDev ? 'debug' : 'release');
+        const mode = ((_a = process.argv.find(v => v.startsWith('--mode=') || v.startsWith('mode='))) === null || _a === void 0 ? void 0 : _a.split('=')[1]) || (this.isDev ? 'debug' : 'release');
         this.setMode(mode);
     }
     setMode(mode = "") {
