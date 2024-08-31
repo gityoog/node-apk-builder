@@ -21,8 +21,6 @@ const logger_1 = __importDefault(require("./logger"));
 const render_1 = __importDefault(require("./render"));
 const task_manager_1 = __importDefault(require("./queue/task-manager"));
 const fs_1 = __importDefault(require("fs"));
-// todo aidl 
-// todo lib 
 let ApkBuilder = ApkBuilder_1 = class ApkBuilder {
     static Create(...args) {
         return new ((0, ioc_di_1.Root)()(this))(...args);

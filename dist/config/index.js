@@ -9,6 +9,8 @@ const fs_1 = __importDefault(require("fs"));
 const util_1 = require("../util");
 class ApkBuilderConfig {
     constructor({ dist, src, buildTools, sign, androidJar, adb, render = true, lib, libs, encoding, resources = [], aidl, main, buildConfig, autoVersion = false }) {
+        this.isDev = false;
+        this.isProd = false;
         this.src = src;
         this.main = main;
         this.dist = dist;
@@ -48,26 +50,33 @@ class ApkBuilderConfig {
         this.buildConfig = buildConfig;
     }
     setDev() {
-        this.setMode('debug');
+        this.isDev = true;
+        this.isProd = false;
+        this.init();
     }
     setProd() {
-        this.setMode('release');
+        this.isDev = false;
+        this.isProd = true;
+        this.init();
     }
-    setMode(mode) {
-        this.outpath = path_1.default.join(this.dist, mode);
+    init() {
+        var _a;
+        this.outpath = path_1.default.join(this.dist, this.isDev ? 'debug' : 'release');
         this.apk = path_1.default.join(this.outpath, 'app.apk');
         this.classes = path_1.default.join(this.outpath, 'classes');
         this.dex = path_1.default.join(this.outpath, 'classes.dex');
         this.jarD8Out = path_1.default.join(this.outpath, 'dex-jar');
         this.jarDex = path_1.default.join(this.jarD8Out, 'classes.dex');
+        const mode = ((_a = process.argv.find(v => v.startsWith('--mode='))) === null || _a === void 0 ? void 0 : _a.split('=')[1]) || (this.isDev ? 'debug' : 'release');
+        this.setMode(mode);
+    }
+    setMode(mode = "") {
         if (this.buildConfig) {
-            const isDev = mode === 'debug';
-            const isProd = mode === 'release';
             const folder = this.buildConfig.package.split('.');
-            const envs = isDev ? this.buildConfig.dev : isProd ? this.buildConfig.prod : {};
+            const envs = this.buildConfig.env[mode] || {};
             envs.mode = mode;
-            envs.isDev = isDev;
-            envs.isProd = isProd;
+            envs.isDev = this.isDev;
+            envs.isProd = this.isProd;
             fs_1.default.writeFileSync(path_1.default.join(this.src, "java", ...folder, "BuildConfig.java"), `package ${this.buildConfig.package};
 public class BuildConfig {
 ${Object.keys(envs).map(k => (0, util_1.valueToJava)(k, envs[k], 1)).join('\n')}

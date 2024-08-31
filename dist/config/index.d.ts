@@ -1,7 +1,6 @@
 type buildConfig = {
     package: string;
-    dev: Record<string, any>;
-    prod: Record<string, any>;
+    env: Record<string, any>;
 };
 type options = {
     dist: string;
@@ -81,9 +80,12 @@ declare class ApkBuilderConfig {
     jarD8Out: string;
     buildConfig: buildConfig | undefined;
     autoVersion: boolean;
+    isDev: boolean;
+    isProd: boolean;
     constructor({ dist, src, buildTools, sign, androidJar, adb, render, lib, libs, encoding, resources, aidl, main, buildConfig, autoVersion }: options);
     setDev(): void;
     setProd(): void;
+    private init;
     private setMode;
     getResFiles(): string[];
     getFlatFiles(): string[];
